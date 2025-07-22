@@ -18,7 +18,7 @@ export const LocalRenderControls: React.FC<{
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   inputProps: z.infer<typeof CompositionProps>;
-}> = ({ text, setText, inputProps }) => {
+}> = ({ text, setText }) => {
   const [renderState, setRenderState] = useState<RenderState>({ status: "idle" });
 
   const handleRender = async () => {
@@ -45,32 +45,24 @@ export const LocalRenderControls: React.FC<{
         throw new Error(errorData.message || "Failed to render video");
       }
 
-      // For development, handle JSON response
-      const result = await response.json();
+      // Handle video file download
+      const blob = await response.blob();
+      const downloadUrl = URL.createObjectURL(blob);
       
-      if (result.status === "development") {
-        setRenderState({ 
-          status: "success", 
-          downloadUrl: "" 
-        });
-        
-        // Show success message for development
-        alert(`✓ Render request processed for "${text}"!\n\n${result.message}\n\nYou can see the video preview above with your client name.`);
-      } else {
-        // Handle actual video file download (future implementation)
-        const blob = await response.blob();
-        const downloadUrl = URL.createObjectURL(blob);
-        
-        setRenderState({ status: "success", downloadUrl });
+      setRenderState({ status: "success", downloadUrl });
 
-        // Auto-download the file
-        const link = document.createElement("a");
-        link.href = downloadUrl;
-        link.download = `welcome-${text.replace(/[^a-zA-Z0-9]/g, '-')}.mp4`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
+      // Auto-download the file
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = `welcome-${text.replace(/[^a-zA-Z0-9]/g, '-')}.mp4`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Clean up the blob URL after a delay
+      setTimeout(() => {
+        URL.revokeObjectURL(downloadUrl);
+      }, 1000);
 
     } catch (error) {
       console.error("Render error:", error);
