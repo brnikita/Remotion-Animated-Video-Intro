@@ -18,18 +18,46 @@ import { Tips } from "../components/Tips";
 import { Main } from "../remotion/MyComp/Main";
 
 const Home: NextPage = () => {
-  const [text, setText] = useState<string>(defaultMyCompProps.title);
+  const [clientName, setClientName] = useState<string>(defaultMyCompProps.clientName);
 
   const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
     return {
-      title: text,
+      clientName: clientName,
     };
-  }, [text]);
+  }, [clientName]);
 
   return (
-    <div>
-      <div className="max-w-screen-md m-auto mb-5">
-        <div className="overflow-hidden rounded-geist shadow-[0_0_200px_rgba(0,0,0,0.15)] mb-10 mt-16">
+    <div style={{ 
+      background: "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)",
+      minHeight: "100vh",
+      color: "#ffffff"
+    }}>
+      <div className="max-w-screen-lg m-auto pb-10">
+        {/* Header */}
+        <div className="text-center pt-16 pb-8">
+          <h1 style={{
+            fontSize: "3rem",
+            fontWeight: 700,
+            background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            marginBottom: "1rem"
+          }}>
+            Video Intro Generator
+          </h1>
+          <p style={{
+            fontSize: "1.2rem",
+            color: "#94a3b8",
+            maxWidth: "600px",
+            margin: "0 auto"
+          }}>
+            Create professional 10-second animated video intros with your client name. 
+            Type a name below to see the magic happen!
+          </p>
+        </div>
+
+        {/* Video Player */}
+        <div className="overflow-hidden rounded-xl shadow-2xl mb-8 bg-black">
           <Player
             component={Main}
             inputProps={inputProps}
@@ -38,25 +66,26 @@ const Home: NextPage = () => {
             compositionHeight={VIDEO_HEIGHT}
             compositionWidth={VIDEO_WIDTH}
             style={{
-              // Can't use tailwind class for width since player's default styles take presedence over tailwind's,
-              // but not over inline styles
               width: "100%",
+              aspectRatio: "16/9"
             }}
             controls
             autoPlay
             loop
           />
         </div>
+
+        {/* Controls */}
         <RenderControls
-          text={text}
-          setText={setText}
+          text={clientName}
+          setText={setClientName}
           inputProps={inputProps}
-        ></RenderControls>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Tips></Tips>
+        />
+
+        <Spacing />
+        <Spacing />
+        
+        <Tips />
       </div>
     </div>
   );

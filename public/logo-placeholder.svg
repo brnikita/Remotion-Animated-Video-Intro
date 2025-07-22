@@ -1,0 +1,27 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="50%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#06b6d4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer ring -->
+  <circle cx="60" cy="60" r="55" stroke="url(#logoGradient)" stroke-width="3" fill="none" opacity="0.7"/>
+  
+  <!-- Inner elements -->
+  <circle cx="60" cy="60" r="35" fill="url(#logoGradient)" opacity="0.1"/>
+  
+  <!-- Play button triangle -->
+  <polygon points="50,45 50,75 80,60" fill="url(#logoGradient)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="30" cy="30" r="4" fill="url(#logoGradient)" opacity="0.6"/>
+  <circle cx="90" cy="30" r="4" fill="url(#logoGradient)" opacity="0.6"/>
+  <circle cx="30" cy="90" r="4" fill="url(#logoGradient)" opacity="0.6"/>
+  <circle cx="90" cy="90" r="4" fill="url(#logoGradient)" opacity="0.6"/>
+  
+  <!-- Center highlight -->
+  <circle cx="60" cy="60" r="8" fill="white" opacity="0.8"/>
+</svg> 

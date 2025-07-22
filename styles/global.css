@@ -1,6 +1,16 @@
 @import "tailwindcss";
 
 :root {
+  /* Project Color Scheme */
+  --primary: #6366f1; /* Indigo */
+  --secondary: #8b5cf6; /* Purple */
+  --accent: #06b6d4; /* Cyan */
+  --background: #0f172a; /* Dark background */
+  --surface: #1e293b; /* Lighter surface */
+  --text: #ffffff; /* White text */
+  --text-muted: #94a3b8; /* Muted text */
+
+  /* Original theme variables */
   --background: #fff;
   --foreground: #000;
   --unfocused-border-color: #eaeaea;
@@ -22,14 +32,30 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #000000;
-    --unfocused-border-color: #333;
-    --focused-border-color: #888;
+    --background: #0f172a;
+    --unfocused-border-color: rgba(99, 102, 241, 0.3);
+    --focused-border-color: #6366f1;
     --foreground: #fff;
-    --button-disabled-color: #111;
-    --geist-error: red;
-    --subtitle: #8d8d8d;
+    --button-disabled-color: #1e293b;
+    --geist-error: #ef4444;
+    --subtitle: #94a3b8;
   }
+}
+
+/* Custom styles for video intro generator */
+.video-intro-gradient {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-effect {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
 }
 
 @theme {
@@ -59,4 +85,59 @@
       opacity: 0.15;
     }
   }
+
+  /* Custom animations for video intro */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+    }
+  }
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
 }

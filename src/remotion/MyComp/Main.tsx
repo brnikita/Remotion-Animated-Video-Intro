@@ -7,52 +7,82 @@ import {
   useVideoConfig,
 } from "remotion";
 import { CompositionProps } from "../../../types/constants";
-import { NextLogo } from "./NextLogo";
-import { loadFont, fontFamily } from "@remotion/google-fonts/Inter";
 import React from "react";
-import { Rings } from "./Rings";
-import { TextFade } from "./TextFade";
+import { AnimatedBackground } from "./AnimatedBackground";
+import { WelcomeText } from "./WelcomeText";
+import { ClientNameText } from "./ClientNameText";
+import { LogoAnimation } from "./LogoAnimation";
 
-loadFont("normal", {
-  subsets: ["latin"],
-  weights: ["400", "700"],
-});
-export const Main = ({ title }: z.infer<typeof CompositionProps>) => {
+export const Main = ({ clientName }: z.infer<typeof CompositionProps>) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const transitionStart = 2 * fps;
-  const transitionDuration = 1 * fps;
+  // Animation timeline based on project specifications:
+  // 0-1s: Logo fade-in and scale
+  // 1-3s: Background particles start moving  
+  // 2-4s: "Welcome to" text slide-in from left
+  // 4-6s: Client name text scale-in with glow effect
+  // 6-8s: Background gradient shift animation
+  // 8-10s: All elements subtle breathing effect + fade out
 
-  const logoOut = spring({
+  const logoStartFrame = 0;
+  const logoEndFrame = 30; // 1 second
+  const logoTransitionDuration = 30; // 1 second
+
+  const logoProgress = spring({
     fps,
     frame,
     config: {
       damping: 200,
+      stiffness: 100,
     },
-    durationInFrames: transitionDuration,
-    delay: transitionStart,
+    durationInFrames: logoTransitionDuration,
+    delay: logoStartFrame,
   });
 
+  // Final fade out for all elements
+  const finalFadeFrame = 270; // 9 seconds
+  const finalFadeOpacity = frame > finalFadeFrame ? 
+    Math.max(0, 1 - (frame - finalFadeFrame) / 30) : 1;
+
   return (
-    <AbsoluteFill className="bg-white">
-      <Sequence durationInFrames={transitionStart + transitionDuration}>
-        <Rings outProgress={logoOut}></Rings>
-        <AbsoluteFill className="justify-center items-center">
-          <NextLogo outProgress={logoOut}></NextLogo>
+    <AbsoluteFill>
+      {/* Animated Background - runs throughout entire duration */}
+      <AnimatedBackground />
+      
+      {/* Logo Animation - 0-1s with fade-in and scale */}
+      <Sequence from={logoStartFrame} durationInFrames={logoEndFrame + 60}>
+        <AbsoluteFill 
+          style={{ 
+            opacity: finalFadeOpacity,
+            transform: `scale(${0.6 + logoProgress * 0.4})`, // Scale from 0.6 to 1
+          }}
+        >
+          <AbsoluteFill className="justify-center items-center">
+            <div style={{ 
+              position: "absolute", 
+              top: "15%", 
+              opacity: logoProgress,
+              transform: `translateY(${(1 - logoProgress) * 50}px)`,
+            }}>
+              <LogoAnimation progress={logoProgress} />
+            </div>
+          </AbsoluteFill>
         </AbsoluteFill>
       </Sequence>
-      <Sequence from={transitionStart + transitionDuration / 2}>
-        <TextFade>
-          <h1
-            className="text-[70px] font-bold"
-            style={{
-              fontFamily,
-            }}
-          >
-            {title}
-          </h1>
-        </TextFade>
+
+      {/* Welcome Text - 2-4s slide-in from left */}
+      <Sequence from={0} durationInFrames={300}>
+        <div style={{ opacity: finalFadeOpacity }}>
+          <WelcomeText />
+        </div>
+      </Sequence>
+
+      {/* Client Name Text - 4-6s scale-in with glow */}
+      <Sequence from={0} durationInFrames={300}>
+        <div style={{ opacity: finalFadeOpacity }}>
+          <ClientNameText clientName={clientName} />
+        </div>
       </Sequence>
     </AbsoluteFill>
   );
