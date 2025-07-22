@@ -12,7 +12,7 @@ import {
   VIDEO_HEIGHT,
   VIDEO_WIDTH,
 } from "../../types/constants";
-import { RenderControls } from "../components/RenderControls";
+import { LocalRenderControls } from "../components/LocalRenderControls";
 import { Spacing } from "../components/Spacing";
 import { Tips } from "../components/Tips";
 import { Main } from "../remotion/MyComp/Main";
@@ -76,7 +76,7 @@ const Home: NextPage = () => {
         </div>
 
         {/* Controls */}
-        <RenderControls
+        <LocalRenderControls
           text={clientName}
           setText={setClientName}
           inputProps={inputProps}
