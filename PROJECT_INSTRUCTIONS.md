@@ -107,7 +107,7 @@ Weight: 300, 400, 600, 700
 2. **Install Remotion Dependencies**
    ```bash
    npm install remotion @remotion/cli @remotion/bundler @remotion/renderer
-   npm install @remotion/lambda @remotion/player
+   npm install @remotion/player
    ```
 
 3. **Install Additional Packages**

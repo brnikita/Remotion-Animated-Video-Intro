@@ -14,7 +14,6 @@ import {
 } from "../../types/constants";
 import { LocalRenderControls } from "../components/LocalRenderControls";
 import { Spacing } from "../components/Spacing";
-import { Tips } from "../components/Tips";
 import { Main } from "../remotion/MyComp/Main";
 
 const Home: NextPage = () => {
@@ -84,8 +83,6 @@ const Home: NextPage = () => {
 
         <Spacing />
         <Spacing />
-        
-        <Tips />
       </div>
     </div>
   );

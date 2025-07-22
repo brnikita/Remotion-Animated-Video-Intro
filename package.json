@@ -12,7 +12,6 @@
     "@remotion/cli": "4.0.325",
     "@remotion/renderer": "4.0.325",
     "@remotion/google-fonts": "4.0.325",
-    "@remotion/lambda": "4.0.325",
     "@remotion/paths": "4.0.325",
     "@remotion/player": "4.0.325",
     "@remotion/shapes": "4.0.325",
@@ -48,7 +47,6 @@
     "start": "next start",
     "lint": "next lint",
     "remotion": "remotion studio",
-    "render": "remotion render",
-    "deploy": "node deploy.mjs"
+    "render": "remotion render"
   }
 }
